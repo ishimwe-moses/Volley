@@ -97,6 +97,48 @@
                 font-size: 0.9em; /* Smaller footer text */
             }
         }
+          /* Basic styling for the install banner */
+        #installBanner {
+            display: none; /* Hidden by default */
+            position: fixed;
+            bottom: -100px; /* Hidden initially below the view */
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #27036A; /* Customizable color */
+            color: white;
+            padding: 15px 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            transition: bottom 0.5s; /* Smooth slide-in */
+        }
+        #installBanner button {
+            background-color: #ffffff33;
+            border: none;
+            color: white;
+            cursor: pointer;
+            padding: 5px 10px;
+            border-radius: 5px;
+            margin-left: 10px;
+        }
+        #installBanner button:hover {
+            background-color: #ffffff55;
+        }
+        /* Success message styling */
+        #successMessage {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #28a745;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+        }
+    
     </style>
 </head>
 <body>
@@ -111,54 +153,87 @@
     </div>
     <button class="button" onclick="window.location.href='winner.html'">Volleyball Score Tracker</button>
     <button class="button" onclick="window.location.href='to-do-list.html'">To-Do List</button>
-</div>
- <!-- Hidden install button styled like a notification -->
-    <div id="install-container" class="install-notification" style="display: none;">
-        <p>Install Volley ball App for a better experience!</p>
-        <button id="install-button">Install App</button>
-        <button id="dismiss-button">Dismiss</button>
+
+
+    <!-- Custom install banner -->
+    <div id="installBanner">
+        <span>Install our app for a better experience!</span>
+        <button id="installButton">Install</button>
+        <button id="closeButton">Close</button>
     </div>
 
-    <script >let deferredPrompt;
+    <!-- Success message -->
+    <div id="successMessage">App installed successfully!</div>
 
-window.addEventListener('beforeinstallprompt', (event) => {
-    // Prevent the default prompt
-    event.preventDefault();
-    // Store the event for later use
-    deferredPrompt = event;
-    
-    // Show the install notification container
-    const installContainer = document.getElementById('install-container');
-    installContainer.style.display = 'flex';  // Make the container visible
+    <script>
+        let deferredPrompt;
 
-    // When the user clicks the 'Install' button
-    document.getElementById('install-button').addEventListener('click', () => {
-        // Show the prompt to install
-        deferredPrompt.prompt();
-        // Wait for the user's decision
-        deferredPrompt.userChoice.then((choiceResult) => {
-            if (choiceResult.outcome === 'accepted') {
-                console.log('User accepted the install prompt');
-            } else {
-                console.log('User dismissed the install prompt');
-            }
-            deferredPrompt = null;
-            // Hide the install notification after the prompt
-            installContainer.style.display = 'none';
+        // Listen for the beforeinstallprompt event
+        window.addEventListener('beforeinstallprompt', (event) => {
+            // Prevent the default mini-infobar from appearing
+            event.preventDefault();
+            // Save the event for triggering it later
+            deferredPrompt = event;
+            // Display the custom install banner with a slide-in effect
+            const installBanner = document.getElementById('installBanner');
+            installBanner.style.display = 'block';
+            installBanner.style.bottom = '20px'; // Slide up into view
         });
-    });
 
-    // If the user clicks 'Dismiss'
-    document.getElementById('dismiss-button').addEventListener('click', () => {
-        installContainer.style.display = 'none';  // Hide the notification
-    });
-});
+        // Install button click event
+        document.getElementById('installButton').addEventListener('click', async () => {
+            if (deferredPrompt) {
+                // Show the install prompt
+                deferredPrompt.prompt();
+                // Wait for the user to respond to the prompt
+                const { outcome } = await deferredPrompt.userChoice;
+                if (outcome === 'accepted') {
+                    console.log('User accepted the install prompt');
+                    showSuccessMessage();
+                } else {
+                    console.log('User dismissed the install prompt');
+                }
+                // Clear the deferred prompt
+                deferredPrompt = null;
+                // Hide the banner
+                document.getElementById('installBanner').style.display = 'none';
+            }
+        });
+
+        // Close button click event
+        document.getElementById('closeButton').addEventListener('click', () => {
+            // Hide the custom install banner
+            document.getElementById('installBanner').style.bottom = '-100px'; // Slide back down
+        });
+
+        // Show success message
+        function showSuccessMessage() {
+            const successMessage = document.getElementById('successMessage');
+            successMessage.style.display = 'block';
+            // Hide the success message after 2 seconds
+            setTimeout(() => {
+                successMessage.style.display = 'none';
+            }, 2000);
+        }
+    </script>
+<script>
+// index.js or app.js
+
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/service-worker.js')
+      .then((registration) => {
+        console.log('Service Worker registered with scope:', registration.scope);
+      })
+      .catch((error) => {
+        console.error('Service Worker registration failed:', error);
+      });
+  });
+}
 </script>
-
-
 <footer>
     <p>Gift from Amos</p>
-    <div class="gift">“In volleyball, teamwork makes the dream work!”</div>
+    <div class="gift">“In volleyball 🏐, teamwork makes the dream work!”</div>
     
 </footer>
 
