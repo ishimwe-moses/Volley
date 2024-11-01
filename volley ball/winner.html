@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NPC Volleyball Team</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        /* Base styling */
+        body {
+            font-family: 'Cabin Sketch', cursive;
+            margin: 0;
+            background-color: #f4f4f4;
+            color: black;
+            display: flex;
+            flex-direction: column;
+            height: 100vh; /* Full height to avoid overflow */
+            overflow: hidden; /* Prevent horizontal scroll */
+        }
+
+        /* Header and back button */
+        header {
+            background-color: #8e7777;
+            color: white;
+            padding: 1em;
+            font-weight: 600;
+            font-size: 3.5rem;
+            text-align: center;
+            text-transform: uppercase;
+            position: relative;
+        }
+        h1 {
+            margin: 0;
+            font-size: 2.5em;
+            font-family: 'Black Ops One', cursive;
+        }
+
+        .back-btn {
+            position: absolute;
+            top: 50%; /* Vertically centers the button in the header */
+            left: 10px; /* Position left for back button */
+            transform: translateY(-50%);
+            background-color: rgb(215, 194, 194); /* Updated for better contrast */
+            color: #8c6e6e; /* Updated to match header color */
+            border: 2px solid #190707; /* Added border for better definition */
+            border-radius: 50%;
+            padding: 10px;
+            cursor: pointer;
+            font-size: 18px;
+            transition: background-color 0.3s, color 0.3s; /* Smooth transition */
+           
+            
+        }
+
+        .back-btn:hover {
+            background-color: #dcd1d1; /* Matches header color on hover */
+            color: white; /* Text color inverts on hover */
+        }
+
+        /* Container styling */
+        .container {
+            padding: 1em;
+            flex-grow: 1; /* Allow container to take remaining height */
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto; /* Allow vertical scrolling */
+            justify-content: space-between; /* Space between sections */
+        }
+
+        /* Scoreboard and controls */
+        .scoreboard {
+            display: flex;
+            justify-content: space-around;
+            gap: 1em;
+            margin-bottom: 1em;
+        }
+
+        .team {
+            background-color: #f0f0f0;
+            border: 2px solid #761818;
+            border-radius: 10px;
+            padding: 1em;
+            width: 150px;
+            text-align: center;
+        }
+
+        .team h3 {
+            color: dark;
+            margin: 0;
+        }
+
+        .score-display {
+            font-size: 2.5em;
+            color: #333;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 0.5em;
+        }
+
+        .controls button {
+            background-color: #8e7777;
+            color: white;
+            border: none;
+            padding: 0.6em;
+            margin-top: 0.5em;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+        }
+
+        /* Set records */
+        .sets {
+            margin-top: 1em;
+            overflow-y: auto; /* Vertical scroll for sets */
+            max-height: 50vh; /* Limit height for scrolling */
+            text-align: center;
+            background-color: #f0f0f0;
+            border-radius: 8px;
+            padding: 1em;
+        }
+
+        .set-record {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1em;
+            margin: 0.5em 0;
+            padding: 0.8em;
+            background-color: #fff;
+            border: 1px solid #333;
+            border-radius: 5px;
+            font-size: 1em;
+        }
+
+        /* Modal for displaying the winner */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            padding: 1.5em;
+            border-radius: 8px;
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.5);
+            text-align: center;
+            width: 80%;
+            max-width: 300px;
+            color: black;
+            z-index: 2000;
+        }
+
+        .modal h2 {
+            color: #0d0202;
+        }
+
+        .modal button {
+            margin-top: 1em;
+            padding: 0.6em 1.2em;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            background-color: #8e7777;
+            color: white;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #8e7777;
+            color: white;
+            text-align: center;
+            padding: 1em;
+            margin-top: auto; /* Push footer to the bottom */
+        }
+
+        /* Responsive styling */
+        @media (max-width: 768px) {
+            header {
+                font-size: 1.2em;
+            }
+
+            .scoreboard {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .team {
+                width: 80%;
+                margin-bottom: 1em;
+                font-size: 0.9em;
+            }
+
+            .score-display {
+                font-size: 2em;
+            }
+
+            .controls button {
+                font-size: 0.9em;
+                padding: 0.5em;
+            }
+
+            .modal {
+                width: 90%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Header with back button -->
+<header>
+    <button class="back-btn" onclick="window.location.href='index.html'">
+        <i class="fas fa-arrow-left"></i>
+    </button>
+    NPC Volleyball Team
+</header>
+
+<div class="container">
+    <!-- Scoreboard for Team A and Team B -->
+    <div class="scoreboard">
+        <div class="team" id="teamA">
+            <h3>Team A</h3>
+            <div class="score-display" id="scoreTeamA">0</div>
+            <div class="controls">
+                <button onclick="removeScore('A')">- Point</button>
+                <button onclick="addScore('A')">+ Point</button>
+            </div>
+        </div>
+        <div class="team" id="teamB">
+            <h3>Team B</h3>
+            <div class="score-display" id="scoreTeamB">0</div>
+            <div class="controls">
+                <button onclick="removeScore('B')">- Point</button>
+                <button onclick="addScore('B')">+ Point</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Set Records and Controls -->
+    <div class="sets" id="setRecords">
+        <h2>Set Records</h2>
+    </div>
+
+    <div class="controls">
+        <button onclick="endSet()">End Set</button>
+        <button onclick="resetScores()">New set</button>
+        <button onclick="resetLastSet()">Clear Sets</button>
+    </div>
+
+    <!-- Modal for displaying the winner -->
+    <div class="modal" id="winnerModal">
+        <h2 id="winnerMessage">🏆 Winner: Team X 🏆</h2>
+        <button onclick="closeModal()">Close</button>
+    </div>
+</div>
+
+<!-- Footer -->
+<footer>
+    Volleyball Score Tracker
+</footer>
+
+<script>
+    let scoreA = 0, scoreB = 0;
+    let setNumber = 1;
+    let lastScores = { A: 0, B: 0 };
+    let setWinsA = 0, setWinsB = 0;
+
+    function addScore(team) {
+        if (team === 'A') scoreA++;
+        else if (team === 'B') scoreB++;
+        updateScoreDisplay();
+    }
+
+    function removeScore(team) {
+        if (team === 'A' && scoreA > 0) scoreA--;
+        else if (team === 'B' && scoreB > 0) scoreB--;
+        updateScoreDisplay();
+    }
+
+    function updateScoreDisplay() {
+        document.getElementById('scoreTeamA').textContent = scoreA;
+        document.getElementById('scoreTeamB').textContent = scoreB;
+    }
+
+    function endSet() {
+        lastScores = { A: scoreA, B: scoreB };
+        let winner = '';
+        if (scoreA > scoreB) {
+            winner = 'Team A';
+            setWinsA++;
+        } else if (scoreB > scoreA) {
+            winner = 'Team B';
+            setWinsB++;
+        }
+        recordSet(winner);
+        showModal(winner);
+        resetScores();
+    }
+
+    function checkFinalWinner() {
+        if (setWinsA > setWinsB) return 'Team A';
+        if (setWinsB > setWinsA) return 'Team B';
+        return null; // In case of a tie
+    }
+
+    function recordSet(winner) {
+        const setRecords = document.getElementById('setRecords');
+        const setRecord = document.createElement('div');
+        setRecord.className = 'set-record';
+        setRecord.textContent = `Set ${setNumber++}: ${winner}`;
+        setRecords.appendChild(setRecord);
+    }
+
+    function resetScores() {
+        scoreA = 0;
+        scoreB = 0;
+        updateScoreDisplay();
+    }
+
+    function resetLastSet() {
+        if (setNumber > 1) setNumber--; // Decrease set number if greater than 1
+        const setRecords = document.getElementById('setRecords');
+        if (setRecords.lastChild) setRecords.removeChild(setRecords.lastChild); // Remove last set record
+    }
+
+    function showModal(winner) {
+        const winnerMessage = document.getElementById('winnerMessage');
+        winnerMessage.textContent = `🏆 Winner: ${winner} 🏆`;
+        document.getElementById('winnerModal').style.display = 'block';
+    }
+
+    function closeModal() {
+        document.getElementById('winnerModal').style.display = 'none';
+    }
+</script>
+</body>
+</html>

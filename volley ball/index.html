@@ -1,0 +1,117 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NPC Volleyball App - Home</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cabin+Sketch&family=Black+Ops+One&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Cabin Sketch', cursive;
+            margin: 0;
+            padding: 0;
+            background-color: #f2f2f2;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            align-items: center; /* Center all elements horizontally */
+            height: 100vh;
+            justify-content: center; /* Center all elements vertically */
+        }
+        header {
+            background-color: #6f4149; /* Red color for header */
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        h1 {
+            margin: 0;
+            font-size: 2.5em;
+            font-family: 'Black Ops One', cursive;
+        }
+        .container {
+            display: flex;
+            flex-direction: column; /* Stack elements vertically */
+            align-items: center; /* Center align the contents */
+            justify-content: center; /* Center vertically */
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .button {
+            background-color: rgb(8, 32, 241); /* Black color for buttons */
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.2em;
+            margin: 10px;
+            cursor: pointer;
+            border-radius: 25px; /* Increased radius for rounded buttons */
+            transition: background-color 0.3s;
+            text-align: center;
+            width: 150px;
+        }
+        .button:hover {
+            background-color: #5a559a; /* Darker shade on hover */
+        }
+        .image-container {
+            display: flex;
+            justify-content: center; /* Center images horizontally */
+            align-items: center;
+            max-width: 150px; /* Limit max width for images */
+            margin-bottom: 20px; /* Space below the image */
+        }
+        .image-container img {
+            max-width: 100%;
+            height: auto;
+            max-height: 150px; /* Limit height for better fit */
+        }
+        footer {
+            background-color: #6f4149; /* Red color for footer */
+            color: white;
+            text-align: center;
+            padding: 15px;
+        }
+        .gift {
+            font-style: italic;
+            font-size: 1.1em;
+            margin-top: 5px;
+        }
+        /* Responsive Font Sizes */
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 1.8em; /* Reduce header size on small screens */
+            }
+            .button {
+                font-size: 1em; /* Smaller button text */
+                padding: 10px 20px; /* Reduced padding for buttons */
+                width: 120px; /* Smaller button width */
+            }
+            .gift {
+                font-size: 0.9em; /* Smaller footer text */
+            }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>NPC Volleyball Team</h1>
+</header>
+
+<div class="container">
+    <div class="image-container">
+        <img src="ball.gif" alt="Volleyball" /> <!-- Placeholder for volleyball image -->
+    </div>
+    <button class="button" onclick="window.location.href='winner.html'">Volleyball Score Tracker</button>
+    <button class="button" onclick="window.location.href='to-do-list.html'">To-Do List</button>
+</div>
+
+<footer>
+    <p>Gift from Amos</p>
+    <div class="gift">“In volleyball, teamwork makes the dream work!”</div>
+</footer>
+
+</body>
+</html>
+

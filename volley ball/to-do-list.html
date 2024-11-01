@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+          body {
+            font-family: 'Cabin Sketch', cursive;
+            font-weight: 600;
+            margin: 0;
+            padding: 0;
+            background-color: #f2f2f2;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            align-items: center; /* Center all elements horizontally */
+            height: 100vh;
+            justify-content: center; /* Center all elements vertically */
+        }
+        header {
+            font-family: 'Cabin Sketch', cursive;
+            background-color: #7d5451; /* Red color for header */
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        h1 {
+            margin: 0;
+            font-size: 2.0em;
+            font-family: 'Black Ops One', cursive;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        header, footer {
+            background-color: #7d5451;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            flex-shrink: 0;
+            width: 100%;
+        }
+
+        .back-btn {
+            position: absolute;
+            top: 5px;
+            left: 10px;
+            background-color: #570702;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            padding: 8px;
+            cursor: pointer;
+            font-size: 20px;
+            transition: background-color 0.3s;
+        }
+
+        .back-btn:hover {
+            background-color: #8e7777;
+        }
+
+        .content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 10px;
+            overflow: auto;
+            width: 100%;
+        }
+
+        .header {
+            padding: 20px;
+            text-align: center;
+            max-width: 500px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        input {
+            border: none;
+            border-radius: 5px;
+            width: 100%;
+            padding: 10px;
+            font-size: 1rem;
+            background-color: white;
+            color: black;
+        }
+
+        .addBtn, .deleteAllBtn {
+            padding: 10px;
+            width: 48%;
+            background: #d9d9d9;
+            color: #555;
+            text-align: center;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: 0.3s;
+            border-radius: 5px;
+            margin: 10px 1%;
+            display: inline-block;
+        }
+
+        .addBtn:hover, .deleteAllBtn:hover {
+            background-color: #bbb;
+        }
+
+        #myUL {
+            width: 100%;
+            max-width: 500px;
+            margin: 10px 0;
+            padding: 0;
+            overflow-y: auto;
+            max-height: 50vh;
+            background: #f4f4f4;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            list-style: none;
+        }
+
+        li {
+            padding: 8px 5px 10px 34px;
+            background: #eee;
+            font-size: 1rem;
+            transition: 0.2s;
+            user-select: none;
+            position: relative;
+        }
+
+        li:nth-child(odd) {
+            background: #f9f9f9;
+        }
+
+        li:hover {
+            background: #ddd;
+        }
+
+        li.checked {
+            background: #888;
+            color: red;
+            text-decoration: line-through;
+        }
+
+        li::before {
+            position: absolute;
+            left: 10px;
+            font-weight: bold;
+        }
+
+        .close {
+            position: absolute;
+            right: 10px;
+            top: 10px;
+            padding: 8px;
+            cursor: pointer;
+        }
+
+        .close:hover {
+            background-color: #f44336;
+            color: white;
+        }
+
+        @media (max-width: 500px) {
+            input, .addBtn, .deleteAllBtn {
+                font-size: 0.9rem;
+            }
+
+            .back-btn {
+                font-size: 18px;
+                padding: 7px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <button class="back-btn" onclick="window.location.href='index.html'">
+        <i class="fas fa-arrow-circle-left"></i>
+    </button>
+    <h1>NPC Volleyball Team</h1>
+</header>
+
+<div class="content">
+    <div class="header">
+        <h2 style="margin: 5px">My To Do List</h2>
+        <input type="text" id="myInput" placeholder="Title..." onfocus="this.style.color='black';" onblur="this.style.color='gray';">
+        <div>
+            <span onclick="newElement()" class="addBtn">Add</span>
+            <span onclick="deleteAll()" class="deleteAllBtn">Delete All</span>
+        </div>
+    </div>
+
+    <ul id="myUL">
+        <li>Warm-up and Stretching <span class="close" onclick="removeItem(this)">×</span></li>
+        <li>Jump Rope for Agility <span class="close" onclick="removeItem(this)">×</span></li>
+        <li>Squat Jumps for Power <span class="close" onclick="removeItem(this)">×</span></li>
+        <li>Ladder Drills for Footwork <span class="close" onclick="removeItem(this)">×</span></li>
+        <li>Plank Holds for Core Strength <span class="close" onclick="removeItem(this)">×</span></li>
+    </ul>
+</div>
+
+<footer>
+    <h2 style="margin: 5px;">To Do List</h2>
+</footer>
+
+<script>
+    function newElement() {
+        var li = document.createElement("li");
+        var inputValue = document.getElementById("myInput").value;
+        var timestamp = new Date().toLocaleString();
+        var t = document.createTextNode(inputValue + " (Created: " + timestamp + ")");
+        li.appendChild(t);
+        if (inputValue === '') {
+            alert("You must write something!");
+        } else {
+            document.getElementById("myUL").appendChild(li);
+        }
+        document.getElementById("myInput").value = "";
+
+        var span = document.createElement("SPAN");
+        var txt = document.createTextNode("\u00D7");
+        span.className = "close";
+        span.onclick = function () {
+            removeItem(span);
+        };
+        span.appendChild(txt);
+        li.appendChild(span);
+
+        reorderList();
+    }
+
+    function removeItem(element) {
+        var li = element.parentElement;
+        li.remove();
+        reorderList();
+    }
+
+    function deleteAll() {
+        document.getElementById("myUL").innerHTML = '';
+    }
+
+    function reorderList() {
+        const items = document.querySelectorAll('#myUL li');
+        items.forEach((item, index) => {
+            item.style.counterReset = 'list-counter ' + (index + 1); // Update counter for each item
+            item.querySelector("::before").textContent = `${index + 1}. `; // Update numbering
+        });
+    }
+</script>
+
+</body>
+</html>
