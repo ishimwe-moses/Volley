@@ -4,215 +4,97 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NPC Volleyball App - Home</title>
-    <link rel="icon" type="image/png" href="/ https://ishimwe-moses.github.io/Volley/favicon-96x96.png" sizes="96x96" />
-<link rel="icon" type="image/svg+xml" href="/ https://ishimwe-moses.github.io/Volley/favicon.svg" />
-<link rel="shortcut icon" href="/ https://ishimwe-moses.github.io/Volley/favicon.ico" />
-<link rel="apple-touch-icon" sizes="180x180" href="/ https://ishimwe-moses.github.io/Volley/apple-touch-icon.png" />
+    <title>NPC Volleyball App</title>
+    <link rel="icon" type="image/png" href="favicon-96x96.png" sizes="96x96" />
+<link rel="icon" type="image/svg+xml" href=" favicon.svg" />
+<link rel="shortcut icon" href="favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
 <meta name="apple-mobile-web-app-title" content="NPC V Team" />
-<link rel="manifest" href="/ https://ishimwe-moses.github.io/Volley/site.webmanifest" />
+<link rel="manifest" href="site.webmanifest" />
     <link href="https://fonts.googleapis.com/css2?family=Cabin+Sketch&family=Black+Ops+One&display=swap" rel="stylesheet">
-     <style>
-        /* Base styling */
+    <style>
         body {
             font-family: 'Cabin Sketch', cursive;
             margin: 0;
-            background-color: #f4f4f4;
-            color: black;
+            padding: 0;
+            background-color: #f2f2f2;
+            color: #333;
             display: flex;
             flex-direction: column;
-            height: 100vh; /* Full height to avoid overflow */
-            overflow: hidden; /* Prevent horizontal scroll */
+            align-items: center; /* Center all elements horizontally */
+            height: 100vh;
+            justify-content: center; /* Center all elements vertically */
         }
-
-        /* Header and back button */
         header {
-            background-color:  rgb(39, 3, 106);;
+            background-color: rgb(39, 3, 106); /* Red color for header */
             color: white;
-            padding: 1em;
-            font-weight: 600;
-            font-size: 3.5rem;
+            padding: 20px;
             text-align: center;
-            text-transform: uppercase;
-            position: relative;
         }
         h1 {
             margin: 0;
-            font-size: 3.5em;
+            font-size: 2.5em;
             font-family: 'Black Ops One', cursive;
         }
-
-        .back-btn {
-            position: absolute;
-            top: 50%; /* Vertically centers the button in the header */
-            left: 10px; /* Position left for back button */
-            transform: translateY(-50%);
-            background-color:  rgb(39, 3, 106); /* Updated for better contrast */
-            color: white; /* Updated to match header color */
-            border: 2px solid #190707; /* Added border for better definition */
-            border-radius: 50%;
-            padding: 10px;
-            cursor: pointer;
-            font-size: 18px;
-            transition: background-color 0.3s, color 0.3s; /* Smooth transition */
-           
-            
-        }
-
-        .back-btn:hover {
-            background-color: blueviolet; /* Matches header color on hover */
-            color: white; /* Text color inverts on hover */
-        }
-
-        /* Container styling */
         .container {
-            padding: 0.5em;
-            flex-grow: 1; /* Allow container to take remaining height */
             display: flex;
-            flex-direction: column;
-            overflow-y: auto; /* Allow vertical scrolling */
-            justify-content: space-between; /* Space between sections */
+            flex-direction: column; /* Stack elements vertically */
+            align-items: center; /* Center align the contents */
+            justify-content: center; /* Center vertically */
+            padding: 20px;
+            box-sizing: border-box;
         }
-
-        /* Scoreboard and controls */
-        .scoreboard {
-            display: flex;
-            justify-content: space-around;
-            gap: 0.5em;
-            margin-bottom: 0.5em;
-        }
-
-        .team {
-            background-color: #f0f0f0;
-            border: 2px solid #761818;
-            border-radius: 10px;
-            padding: 1em;
+        .button {
+            background-color: rgb(8, 32, 241); /* Black color for buttons */
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.2em;
+            margin: 10px;
+            cursor: pointer;
+            border-radius: 25px; /* Increased radius for rounded buttons */
+            transition: background-color 0.3s;
+            text-align: center;
             width: 150px;
-            text-align: center;
         }
-
-        .team h3 {
-            color: dark;
-            margin: 0;
+        .button:hover {
+            background-color: #5a559a; /* Darker shade on hover */
         }
-
-        .score-display {
-            font-size: 2.5em;
-            color: black;
-        }
-
-        .controls {
+        .image-container {
             display: flex;
-            justify-content: center;
-            gap: 0.5em;
-        }
-
-        .controls button {
-            background-color:  rgb(39, 3, 106);
-            color: white;
-            border: none;
-            padding: 0.6em;
-            margin-top: 0.5em;
-            border-radius: 10px;
-            cursor: pointer;
-            font-size: 1.5em;
-        }
-
-        /* Set records */
-        .sets {
-            margin-top: 1em;
-            overflow-y: auto; /* Vertical scroll for sets */
-            max-height: 50vh; /* Limit height for scrolling */
-            text-align: center;
-            background-color: #ece5e5;
-            border-radius: 15px;
-            padding: 1em;
-        }
-
-        .set-record {
-            display: flex;
-            justify-content: center;
+            justify-content: center; /* Center images horizontally */
             align-items: center;
-            gap: 1em;
-            margin: 0.5em 0;
-            padding: 0.8em;
-            background-color: #fff;
-            border: 1px solid #333;
-            border-radius: 5px;
-            font-size: 1em;
-            font-weight: 600;
+            max-width: 150px; /* Limit max width for images */
+            margin-bottom: 20px; /* Space below the image */
         }
-
-        /* Modal for displaying the winner */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background-color: white;
-            padding: 1.5em;
-            border-radius: 8px;
-            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.5);
-            text-align: center;
-            width: 80%;
-            max-width: 300px;
-            color: black;
-            z-index: 2000;
+        .image-container img {
+            max-width: 100%;
+            height: auto;
+            max-height: 150px; /* Limit height for better fit */
         }
-
-        .modal h2 {
-            color: #0d0202;
-        }
-
-        .modal button {
-            margin-top: 1em;
-            padding: 0.6em 1.2em;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            background-color:  rgb(39, 3, 106);
-            color: white;
-        }
-
-        /* Footer */
         footer {
-            background-color:  rgb(39, 3, 106);
+            background-color:  rgb(39, 3, 106); /* Red color for footer */
             color: white;
             text-align: center;
-            padding: 1em;
-            margin-top: auto; /* Push footer to the bottom */
+            padding: 15px;
         }
-
-        /* Responsive styling */
-        @media (max-width: 768px) {
-            header {
-                font-size: 1.2em;
+        .gift {
+        
+            font-size: 1.1em;
+            margin-top: 5px;
+        }
+        /* Responsive Font Sizes */
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 1.8em; /* Reduce header size on small screens */
             }
-
-            .scoreboard {
-                flex-direction: column;
-                align-items: center;
+            .button {
+                font-size: 1em; /* Smaller button text */
+                padding: 10px 20px; /* Reduced padding for buttons */
+                width: 150px; /* Smaller button width */
             }
-
-            .team {
-                width: 80%;
-                margin-bottom: 1em;
-                font-size: 0.9em;
-                font-weight: 600;
-            }
-
-            .score-display {
-                font-size: 2em;
-            }
-
-            .controls button {
-                font-size: 0.9em;
-                padding: 0.5em;
-            }
-
-            .modal {
-                width: 80%;
+            .gift {
+                font-size: 0.9em; /* Smaller footer text */
             }
         }
     </style>
