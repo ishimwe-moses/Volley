@@ -258,7 +258,22 @@
         <button onclick="closeModal()">Close</button>
     </div>
 </div>
-
+<!-- Notification for feedback -->
+    <div id="notification" style="
+        display: none;
+        position: fixed;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: #333;
+        color: white;
+        padding: 10px 20px;
+        border-radius: 5px;
+        z-index: 1000;
+        font-size: 1em;">
+        Progress saved!
+    </div>
+    <!-- Rest of your HTML code here -->
 <!-- Footer -->
 <footer>
     Volleyball Score Tracker
@@ -337,6 +352,47 @@
     function closeModal() {
         document.getElementById('winnerModal').style.display = 'none';
     }
+    // Show notification message
+function showNotification(message) {
+    const notification = document.getElementById('notification');
+    notification.textContent = message;
+    notification.style.display = 'block';
+    setTimeout(() => {
+        notification.style.display = 'none';
+    }, 2000); // Hide after 2 seconds
+}
+
+// Save progress to localStorage and show notification
+function saveProgress() {
+    localStorage.setItem('scoreA', scoreA);
+    localStorage.setItem('scoreB', scoreB);
+    localStorage.setItem('setNumber', setNumber);
+    localStorage.setItem('setHistory', JSON.stringify(setHistory));
+    showNotification("Progress saved!");
+}
+
+// Load progress from localStorage and show notification
+function loadProgress() {
+    scoreA = parseInt(localStorage.getItem('scoreA')) || 0;
+    scoreB = parseInt(localStorage.getItem('scoreB')) || 0;
+    setNumber = parseInt(localStorage.getItem('setNumber')) || 1;
+    setHistory = JSON.parse(localStorage.getItem('setHistory')) || [];
+    showNotification("Progress restored!");
+}
+
+// Reset last set and clear localStorage, then show notification
+function resetLastSet() {
+    setHistory = [];
+    setNumber = 1;
+    renderSetHistory();
+    localStorage.removeItem('scoreA');
+    localStorage.removeItem('scoreB');
+    localStorage.removeItem('setNumber');
+    localStorage.removeItem('setHistory');
+    showNotification("All sets cleared!");
+    saveProgress();
+}
+
 </script>
 </body>
 </html>
