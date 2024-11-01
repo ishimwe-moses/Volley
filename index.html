@@ -106,10 +106,54 @@
     <button class="button" onclick="window.location.href='winner.html'">Volleyball Score Tracker</button>
     <button class="button" onclick="window.location.href='to-do-list.html'">To-Do List</button>
 </div>
+ <!-- Hidden install button styled like a notification -->
+    <div id="install-container" class="install-notification" style="display: none;">
+        <p>Install Volley ball App for a better experience!</p>
+        <button id="install-button">Install App</button>
+        <button id="dismiss-button">Dismiss</button>
+    </div>
+
+    <script >let deferredPrompt;
+
+window.addEventListener('beforeinstallprompt', (event) => {
+    // Prevent the default prompt
+    event.preventDefault();
+    // Store the event for later use
+    deferredPrompt = event;
+    
+    // Show the install notification container
+    const installContainer = document.getElementById('install-container');
+    installContainer.style.display = 'flex';  // Make the container visible
+
+    // When the user clicks the 'Install' button
+    document.getElementById('install-button').addEventListener('click', () => {
+        // Show the prompt to install
+        deferredPrompt.prompt();
+        // Wait for the user's decision
+        deferredPrompt.userChoice.then((choiceResult) => {
+            if (choiceResult.outcome === 'accepted') {
+                console.log('User accepted the install prompt');
+            } else {
+                console.log('User dismissed the install prompt');
+            }
+            deferredPrompt = null;
+            // Hide the install notification after the prompt
+            installContainer.style.display = 'none';
+        });
+    });
+
+    // If the user clicks 'Dismiss'
+    document.getElementById('dismiss-button').addEventListener('click', () => {
+        installContainer.style.display = 'none';  // Hide the notification
+    });
+});
+</script>
+
 
 <footer>
     <p>Gift from Amos</p>
     <div class="gift">“In volleyball, teamwork makes the dream work!”</div>
+    
 </footer>
 
 </body>
