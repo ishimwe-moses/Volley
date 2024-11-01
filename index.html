@@ -12,89 +12,207 @@
 <meta name="apple-mobile-web-app-title" content="NPC V Team" />
 <link rel="manifest" href="/ https://ishimwe-moses.github.io/Volley/site.webmanifest" />
     <link href="https://fonts.googleapis.com/css2?family=Cabin+Sketch&family=Black+Ops+One&display=swap" rel="stylesheet">
-    <style>
+     <style>
+        /* Base styling */
         body {
             font-family: 'Cabin Sketch', cursive;
             margin: 0;
-            padding: 0;
-            background-color: #f2f2f2;
-            color: #333;
+            background-color: #f4f4f4;
+            color: black;
             display: flex;
             flex-direction: column;
-            align-items: center; /* Center all elements horizontally */
-            height: 100vh;
-            justify-content: center; /* Center all elements vertically */
+            height: 100vh; /* Full height to avoid overflow */
+            overflow: hidden; /* Prevent horizontal scroll */
         }
+
+        /* Header and back button */
         header {
-            background-color: #6f4149; /* Red color for header */
+            background-color:  rgb(39, 3, 106);;
             color: white;
-            padding: 20px;
+            padding: 1em;
+            font-weight: 600;
+            font-size: 3.5rem;
             text-align: center;
+            text-transform: uppercase;
+            position: relative;
         }
         h1 {
             margin: 0;
-            font-size: 2.5em;
+            font-size: 3.5em;
             font-family: 'Black Ops One', cursive;
         }
-        .container {
-            display: flex;
-            flex-direction: column; /* Stack elements vertically */
-            align-items: center; /* Center align the contents */
-            justify-content: center; /* Center vertically */
-            padding: 20px;
-            box-sizing: border-box;
+
+        .back-btn {
+            position: absolute;
+            top: 50%; /* Vertically centers the button in the header */
+            left: 10px; /* Position left for back button */
+            transform: translateY(-50%);
+            background-color:  rgb(39, 3, 106); /* Updated for better contrast */
+            color: white; /* Updated to match header color */
+            border: 2px solid #190707; /* Added border for better definition */
+            border-radius: 50%;
+            padding: 10px;
+            cursor: pointer;
+            font-size: 18px;
+            transition: background-color 0.3s, color 0.3s; /* Smooth transition */
+           
+            
         }
-        .button {
-            background-color: rgb(8, 32, 241); /* Black color for buttons */
+
+        .back-btn:hover {
+            background-color: blueviolet; /* Matches header color on hover */
+            color: white; /* Text color inverts on hover */
+        }
+
+        /* Container styling */
+        .container {
+            padding: 0.5em;
+            flex-grow: 1; /* Allow container to take remaining height */
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto; /* Allow vertical scrolling */
+            justify-content: space-between; /* Space between sections */
+        }
+
+        /* Scoreboard and controls */
+        .scoreboard {
+            display: flex;
+            justify-content: space-around;
+            gap: 0.5em;
+            margin-bottom: 0.5em;
+        }
+
+        .team {
+            background-color: #f0f0f0;
+            border: 2px solid #761818;
+            border-radius: 10px;
+            padding: 1em;
+            width: 150px;
+            text-align: center;
+        }
+
+        .team h3 {
+            color: dark;
+            margin: 0;
+        }
+
+        .score-display {
+            font-size: 2.5em;
+            color: black;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 0.5em;
+        }
+
+        .controls button {
+            background-color:  rgb(39, 3, 106);
             color: white;
             border: none;
-            padding: 15px 30px;
-            font-size: 1.2em;
-            margin: 10px;
+            padding: 0.6em;
+            margin-top: 0.5em;
+            border-radius: 10px;
             cursor: pointer;
-            border-radius: 25px; /* Increased radius for rounded buttons */
-            transition: background-color 0.3s;
+            font-size: 1.5em;
+        }
+
+        /* Set records */
+        .sets {
+            margin-top: 1em;
+            overflow-y: auto; /* Vertical scroll for sets */
+            max-height: 50vh; /* Limit height for scrolling */
             text-align: center;
-            width: 150px;
+            background-color: #ece5e5;
+            border-radius: 15px;
+            padding: 1em;
         }
-        .button:hover {
-            background-color: #5a559a; /* Darker shade on hover */
-        }
-        .image-container {
+
+        .set-record {
             display: flex;
-            justify-content: center; /* Center images horizontally */
+            justify-content: center;
             align-items: center;
-            max-width: 150px; /* Limit max width for images */
-            margin-bottom: 20px; /* Space below the image */
+            gap: 1em;
+            margin: 0.5em 0;
+            padding: 0.8em;
+            background-color: #fff;
+            border: 1px solid #333;
+            border-radius: 5px;
+            font-size: 1em;
+            font-weight: 600;
         }
-        .image-container img {
-            max-width: 100%;
-            height: auto;
-            max-height: 150px; /* Limit height for better fit */
+
+        /* Modal for displaying the winner */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            padding: 1.5em;
+            border-radius: 8px;
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.5);
+            text-align: center;
+            width: 80%;
+            max-width: 300px;
+            color: black;
+            z-index: 2000;
         }
+
+        .modal h2 {
+            color: #0d0202;
+        }
+
+        .modal button {
+            margin-top: 1em;
+            padding: 0.6em 1.2em;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            background-color:  rgb(39, 3, 106);
+            color: white;
+        }
+
+        /* Footer */
         footer {
-            background-color: #6f4149; /* Red color for footer */
+            background-color:  rgb(39, 3, 106);
             color: white;
             text-align: center;
-            padding: 15px;
+            padding: 1em;
+            margin-top: auto; /* Push footer to the bottom */
         }
-        .gift {
-            font-style: italic;
-            font-size: 1.1em;
-            margin-top: 5px;
-        }
-        /* Responsive Font Sizes */
-        @media (max-width: 600px) {
-            h1 {
-                font-size: 1.8em; /* Reduce header size on small screens */
+
+        /* Responsive styling */
+        @media (max-width: 768px) {
+            header {
+                font-size: 1.2em;
             }
-            .button {
-                font-size: 1em; /* Smaller button text */
-                padding: 10px 20px; /* Reduced padding for buttons */
-                width: 120px; /* Smaller button width */
+
+            .scoreboard {
+                flex-direction: column;
+                align-items: center;
             }
-            .gift {
-                font-size: 0.9em; /* Smaller footer text */
+
+            .team {
+                width: 80%;
+                margin-bottom: 1em;
+                font-size: 0.9em;
+                font-weight: 600;
+            }
+
+            .score-display {
+                font-size: 2em;
+            }
+
+            .controls button {
+                font-size: 0.9em;
+                padding: 0.5em;
+            }
+
+            .modal {
+                width: 80%;
             }
         }
     </style>
