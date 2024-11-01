@@ -1,21 +1,24 @@
 {
   "name": "NPC V Team",
   "short_name": "NPC V T",
+ "start_url": "/index.html",
+    "scope": "/",
+ "display": "standalone",
   "icons": [
     {
-      "src": "/ https://ishimwe-moses.github.io/Volley/web-app-manifest-192x192.png",
+      "src": "/ web-app-manifest-192x192.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "maskable"
     },
     {
-      "src": "/ https://ishimwe-moses.github.io/Volley/web-app-manifest-512x512.png",
+      "src": "/ https://web-app-manifest-512x512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "maskable"
     }
   ],
   "theme_color": "#7d7571",
-  "background_color": "#696657",
+  "background_color": "#27036A",
   "display": "standalone"
 }
